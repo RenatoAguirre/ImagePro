@@ -1,6 +1,7 @@
 /*
  Class Region
 */
+#include <listofpoint2d.hpp>
 
 namespace image {
 	class Region{
