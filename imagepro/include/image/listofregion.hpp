@@ -1,9 +1,11 @@
 /*
  Class ListOfRegion
 */
-#include <region.hpp>
-#include <noderegion.hpp>
+#include "region.hpp"
+#include "noderegion.hpp"
 
+#if !defined(IMAGE_LISTOFREGION_HPP)
+#define IMAGE_LISTOFREGION_HPP
 
 namespace image {
 	class ListOfRegion{
@@ -20,3 +22,5 @@ namespace image {
 		virtual ~ListOfRegion();
 	};
 }
+
+#endif // IMAGE_LISTOFREGION_HPP

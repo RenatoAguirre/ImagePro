@@ -1,7 +1,9 @@
 /*
  Class NodeRegion
 */
-#include <region.hpp>
+#include "region.hpp"
+#if !defined(IMAGE_NODEREGION_HPP)
+#define IMAGE_NODEREGION_HPP
 namespace image {
 	class NodeRegion{
 	private:		
@@ -18,3 +20,4 @@ namespace image {
 		virtual ~NodeRegion();
 	};
 }
+#endif // IMAGE_NODEREGION_HPP

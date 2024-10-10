@@ -2,7 +2,8 @@
  Class Point2D
 */
 
-
+#if !defined(IMAGE_POINT2D_HPP)
+#define IMAGE_POINT2D_HPP
 namespace image {
 	class Point2D{
 	private:
@@ -18,3 +19,4 @@ namespace image {
         virtual ~Point2D(); 		
 	};
 }
+#endif // IMAGE_POINT2D_HPP

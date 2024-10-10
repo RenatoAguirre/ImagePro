@@ -3,6 +3,11 @@
 #include <iostream>
 #include <cassert>
 #include <cstring>
+#include <stack>
+#include "image/listofregion.hpp"
+#include "image/region.hpp"
+#include "image/point2D.hpp"
+
 
 namespace image{
 
@@ -98,6 +103,64 @@ namespace image{
         assert(im != nullptr);
         return im;
     }
+
+    ListOfRegion Image::getRegions() {
+		ListOfRegion regions; // Lista para almacenar las regiones encontradas
+		int regionId = 0; // Para identificar cada región
+		std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false)); // Matriz para rastrear los píxeles visitados
+
+		for (int row = 0; row < height; ++row) {
+			for (int col = 0; col < width; ++col) {
+				if (getValue(row, col) == 1 && !visited[row][col]) { // Si encontramos un 1 no visitado
+					regionId++; // Incrementamos el contador de regiones
+					int size = 0; // Tamaño de la región encontrada
+
+					// Usamos una pila para realizar la búsqueda DFS
+					std::stack<Point2D*> stack;
+					stack.push(new Point2D(col, row)); // Agregamos el punto inicial
+
+					while (!stack.empty()) {
+						Point2D* point = stack.top();
+						stack.pop();
+
+						int x = point->getX();
+						int y = point->getY();
+
+						if (visited[y][x]) {
+							delete point; // Liberamos la memoria si ya fue visitado
+							continue;
+						}
+
+						visited[y][x] = true; // Marcamos el píxel como visitado
+						size++; // Aumentamos el tamaño de la región
+
+						// Explorar los píxeles vecinos (4 conectividades)
+						for (int dx = -1; dx <= 1; dx++) {
+							for (int dy = -1; dy <= 1; dy++) {
+								if ((dx == 0) != (dy == 0) && (dx == 0 || dy == 0)) { // Asegúrate de no visitar la misma celda
+									int newX = x + dx;
+									int newY = y + dy;
+									
+									// Verificar límites y si el nuevo píxel es parte de la región
+									if (newX >= 0 && newX < width && newY >= 0 && newY < height && getValue(newY, newX) == 1 && !visited[newY][newX]) {
+										stack.push(new Point2D(newX, newY)); // Agregamos el nuevo punto a la pila
+									}
+								}
+							}
+						}
+
+						delete point; // Liberamos la memoria del punto actual
+					}
+
+					// Una vez que hemos encontrado toda la región, la agregamos a la lista de regiones
+					Region* newRegion = new Region();
+					newRegion->showRegion(); // Mostrar información de la región (puedes implementar cómo mostrarla)
+					regions.add(newRegion);
+				}
+			}
+		}
+		return regions; // Devolver todas las regiones encontradas
+	}
 
 }
 

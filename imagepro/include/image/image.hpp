@@ -1,8 +1,13 @@
 /**
  * Class Image
  */
+#include "string"
+#include "listofregion.hpp"
 
-#include <string>
+
+
+#if !defined(IMAGE_IMAGE_HPP)
+#define IMAGE_IMAGE_HPP
 
 namespace image {
 	class Image; 
@@ -22,8 +27,10 @@ namespace image {
 		void threshold(); 
     	int getValue(int row, int col);
 		void show();
-		//ListOfRegions getRegions()
-        virtual ~Image(); 
+		ListOfRegion getRegions();
+    virtual ~Image(); 
 		static Image* readImage(std::string &path);        
 	};
 }
+
+#endif // IMAGE_IMAGE_HPP)
