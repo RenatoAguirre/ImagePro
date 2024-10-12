@@ -27,7 +27,7 @@ int main(int nargs, char** vargs) {
     for (int i = 0; i < regions.getSize(); ++i) {
         image::Region* region = regions.get(i); // Obtener la región i-ésima
         if (region != nullptr) {
-            region->showRegion(); // Mostrar información de la región
+            region->showRegion(im->width, im->height); // Mostrar información de la región
         } else {
             std::cerr << "Error: no se pudo obtener la región " << i << std::endl;
         }

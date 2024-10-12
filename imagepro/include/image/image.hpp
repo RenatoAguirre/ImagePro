@@ -16,11 +16,11 @@ namespace image {
 
 	class Image{
 	private:
-		int width;
-		int height;
 		int th_value;
 		uchar* data;
 	public:
+	  int width;
+		int height;
 		Image();
 		Image(int w, int h);
 		Image(int w, int h, uchar* _data);

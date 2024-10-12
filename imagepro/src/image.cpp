@@ -19,7 +19,7 @@ namespace image{
 
     }
 
-    Image::Image(int w, int h, uchar* _data): width(w), height(h), th_value(120), data(_data){
+    Image::Image(int w, int h, uchar* _data): width(w), height(h), th_value(100), data(_data){
        threshold();
     }
 
@@ -105,19 +105,20 @@ namespace image{
     }
 
     ListOfRegion Image::getRegions() {
-		ListOfRegion regions; // Lista para almacenar las regiones encontradas
-		int regionId = 0; // Para identificar cada región
-		std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false)); // Matriz para rastrear los píxeles visitados
+		ListOfRegion regions;
+		int regionId = 0;
+		std::vector<std::vector<bool>> visited(height, std::vector<bool>(width, false));
 
 		for (int row = 0; row < height; ++row) {
 			for (int col = 0; col < width; ++col) {
-				if (getValue(row, col) == 1 && !visited[row][col]) { // Si encontramos un 1 no visitado
-					regionId++; // Incrementamos el contador de regiones
-					int size = 0; // Tamaño de la región encontrada
+				if (getValue(row, col) == 1 && !visited[row][col]) {
+					regionId++;
+					int size = 0;
+					Region* newRegion = new Region(); // Creamos una nueva región
 
-					// Usamos una pila para realizar la búsqueda DFS
+					// DFS stack
 					std::stack<Point2D*> stack;
-					stack.push(new Point2D(col, row)); // Agregamos el punto inicial
+					stack.push(new Point2D(col, row)); // Punto inicial
 
 					while (!stack.empty()) {
 						Point2D* point = stack.top();
@@ -127,14 +128,17 @@ namespace image{
 						int y = point->getY();
 
 						if (visited[y][x]) {
-							delete point; // Liberamos la memoria si ya fue visitado
+							delete point; // Liberamos la memoria
 							continue;
 						}
 
-						visited[y][x] = true; // Marcamos el píxel como visitado
-						size++; // Aumentamos el tamaño de la región
+						visited[y][x] = true;
+						size++;
 
-						// Explorar los píxeles vecinos (4 conectividades)
+						// Añadimos el punto a la región
+						newRegion->addPoint(new Point2D(x, y));
+
+						// Explorar píxeles vecinos (4 conectividades)
 						for (int dx = -1; dx <= 1; dx++) {
 							for (int dy = -1; dy <= 1; dy++) {
 								if ((dx == 0) != (dy == 0) && (dx == 0 || dy == 0)) { // Asegúrate de no visitar la misma celda
@@ -143,18 +147,16 @@ namespace image{
 									
 									// Verificar límites y si el nuevo píxel es parte de la región
 									if (newX >= 0 && newX < width && newY >= 0 && newY < height && getValue(newY, newX) == 1 && !visited[newY][newX]) {
-										stack.push(new Point2D(newX, newY)); // Agregamos el nuevo punto a la pila
+										stack.push(new Point2D(newX, newY));
 									}
 								}
 							}
 						}
 
-						delete point; // Liberamos la memoria del punto actual
+						delete point; // Liberamos memoria del punto actual
 					}
 
-					// Una vez que hemos encontrado toda la región, la agregamos a la lista de regiones
-					Region* newRegion = new Region();
-					newRegion->showRegion(); // Mostrar información de la región (puedes implementar cómo mostrarla)
+					// Una vez completada la región, la agregamos a la lista
 					regions.add(newRegion);
 				}
 			}

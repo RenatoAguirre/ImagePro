@@ -14,8 +14,9 @@ namespace image {
 		ListOfPoint2D points;		
 	public:
 		Region();
-		void showRegion();
+		void showRegion(int imgWidth, int imgHeight);
         virtual ~Region(); 		
+		void addPoint(Point2D* point);
 	};
 }
 #endif // IMAGE_REGION_HPP
