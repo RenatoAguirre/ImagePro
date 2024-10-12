@@ -52,15 +52,15 @@ namespace image {
         NodeRegion* current = head;
         int count = 0;
 
-        // Recorremos la lista enlazada hasta llegar al índice deseado
+
         while (current != nullptr) {
             if (count == index) {
-                return current->getRegion(); // Devolver el puntero a Region
+                return current->getRegion(); 
             }
             count++;
             current = current->getNext();
         }
-        return nullptr; // Si el índice no es válido
+        return nullptr;
     }
     int ListOfRegion::getSize() {
         return size;

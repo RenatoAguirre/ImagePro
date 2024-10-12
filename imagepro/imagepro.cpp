@@ -24,7 +24,8 @@ int main(int nargs, char** vargs) {
     std::cout << "La imagen tiene " << regions.getSize() << " regiones" << std::endl;
 
     // Mostrar detalles de cada región
-    for (int i = 0; i < regions.getSize(); ++i) {
+    for (int i = 0; i < 2; ++i) {
+        std::cout << " -------------------- " << i << std::endl;
         image::Region* region = regions.get(i); // Obtener la región i-ésima
         if (region != nullptr) {
             region->showRegion(im->width, im->height); // Mostrar información de la región
