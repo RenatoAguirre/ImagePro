@@ -128,7 +128,7 @@ namespace image{
 						int y = point->getY();
 
 						if (visited[y][x]) {
-							delete point; // Liberamos la memoria
+							delete point; 
 							continue;
 						}
 

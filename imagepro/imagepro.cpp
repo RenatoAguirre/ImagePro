@@ -11,7 +11,7 @@
 
 
 int main(int nargs, char** vargs) {
-    std::string filename("../images/image_2.bmp"); // Cambia la ruta según sea necesario
+    std::string filename("../images/image_1.bmp"); // Cambia la ruta según sea necesario
     std::cout << "Cargando imagen desde: " << filename << std::endl;
     
     image::Image* im = image::Image::readImage(filename); // Cargar la imagen
@@ -25,7 +25,7 @@ int main(int nargs, char** vargs) {
 
     // Mostrar detalles de cada región
     for (int i = 0; i < 2; ++i) {
-        std::cout << " -------------------- " << i << std::endl;
+        std::cout << " -------------------- " << "Region: " << i + 1 << std::endl;
         image::Region* region = regions.get(i); // Obtener la región i-ésima
         if (region != nullptr) {
             region->showRegion(im->width, im->height); // Mostrar información de la región
